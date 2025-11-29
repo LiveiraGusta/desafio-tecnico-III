@@ -1,6 +1,6 @@
 import { IsOptional, IsUUID, IsEnum, IsString, IsDateString, IsInt, Min } from 'class-validator';
 import { Type } from 'class-transformer';
-import { DicomModality } from 'src/generated/prisma/enums';
+import { DicomModality } from '../../generated/prisma/enums';
 
 export class QueryExamsDto {
     @IsOptional()

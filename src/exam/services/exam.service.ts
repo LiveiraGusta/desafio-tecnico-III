@@ -3,8 +3,7 @@ import { CreateExamDto } from '../dtos/create-exam.dto';
 import { UpdateExamDto } from '../dtos/update-exam.dto';
 import { PrismaService } from '../../shared/prisma/prisma.service';
 import { QueryExamsDto } from '../dtos/query-exam.dto';
-import { Exam } from 'src/generated/prisma/client';
-import { PatientService } from 'src/patient/services/patient.service';
+import { PatientService } from '../../patient/services/patient.service';
 
 @Injectable()
 export class ExamService {
@@ -74,5 +73,5 @@ export class ExamService {
       },
     });
   }   
-  
+
 }

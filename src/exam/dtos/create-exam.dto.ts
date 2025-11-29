@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsUUID, IsEnum, IsDateString } from 'class-validator';
-import { DicomModality } from 'src/generated/prisma/enums';
+import { DicomModality } from '../../generated/prisma/enums';
 
 export class CreateExamDto{
     @IsString()
