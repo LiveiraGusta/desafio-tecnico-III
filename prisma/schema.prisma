@@ -12,3 +12,42 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum DicomModality {
+  CR
+  CT
+  DX
+  MG
+  MR
+  NM
+  OT
+  PT
+  RF
+  US
+  XA
+}
+
+model Patient {
+  id          String    @id @default(uuid())
+  name        String
+  document    String    @unique
+  birthDate   DateTime
+  exams       Exam[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([document])
+}
+
+model Exam {
+  id              String         @id @default(uuid())
+  patientId       String
+  patient         Patient        @relation(fields: [patientId], references: [id])
+  dicomModality   DicomModality
+  examDate        DateTime
+  idempotencyKey  String         @unique
+  createdAt       DateTime       @default(now())
+
+  @@index([patientId])
+  @@index([idempotencyKey])
+}
