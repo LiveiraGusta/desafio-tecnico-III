@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ExamService } from '../services/exam.service';
 import { CreateExamDto } from '../dtos/create-exam.dto';
 import { UpdateExamDto } from '../dtos/update-exam.dto';
+import { QueryExamsDto } from '../dtos/query-exam.dto';
 
-@Controller('exam')
+@Controller('exames')
 export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
@@ -13,22 +14,8 @@ export class ExamController {
   }
 
   @Get()
-  findAll() {
-    return this.examService.findAll();
+  findAll(@Query() query: QueryExamsDto) {
+    return this.examService.findAll(query);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.examService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExamDto: UpdateExamDto) {
-    return this.examService.update(+id, updateExamDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.examService.remove(+id);
-  }
 }

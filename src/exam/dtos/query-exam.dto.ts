@@ -16,8 +16,8 @@ export class QueryExamsDto {
     pageSize?: number = 10;
 
     @IsOptional()
-    @IsUUID()
-    patientId?: string;
+    @IsString()
+    patientDocument?: string;
 
     @IsOptional()
     @IsEnum(DicomModality)

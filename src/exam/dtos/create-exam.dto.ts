@@ -2,9 +2,9 @@ import { IsString, IsNotEmpty, IsUUID, IsEnum, IsDateString } from 'class-valida
 import { DicomModality } from 'src/generated/prisma/enums';
 
 export class CreateExamDto{
-    @IsUUID()
-    @IsNotEmpty({ message: 'Patient ID is required' })
-    patientId: string;
+    @IsString()
+    @IsNotEmpty({ message: 'Patient CPF is required' })
+    patientDocument: string;
 
     @IsEnum(DicomModality, { message: 'Dicom modality must be a valid enum value' })
     dicomModality: DicomModality;

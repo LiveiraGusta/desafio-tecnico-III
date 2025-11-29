@@ -19,6 +19,7 @@ export class PatientService {
   async findAll(query: QueryPatientsDto) {
     const { page = 1, pageSize = 10, search, name, document } = query;
     const skip = (page - 1) * pageSize;
+    
     const where: any = {};
 
     if (search) {
@@ -54,7 +55,7 @@ export class PatientService {
     };
   }
 
-  private async findByDocument(document: string): Promise<Patient | null> {
+  public async findByDocument(document: string): Promise<Patient | null> {
     return this.prismaService.patient.findUnique({ where: { document } });
   }
 
