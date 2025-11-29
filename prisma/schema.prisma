@@ -32,18 +32,20 @@ model Patient {
   id          String    @id @default(uuid())
   name        String
   document    String    @unique
-  birthDate   DateTime
-  exams       Exam[]
+  email       String
+  phone       String
+  exams       Exam[]    @relation("PatientExams")
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
+  @@index([name])
   @@index([document])
 }
 
 model Exam {
   id              String         @id @default(uuid())
   patientId       String
-  patient         Patient        @relation(fields: [patientId], references: [id])
+  patient         Patient        @relation("PatientExams",fields: [patientId], references: [id])
   dicomModality   DicomModality
   examDate        DateTime
   idempotencyKey  String         @unique
@@ -51,4 +53,5 @@ model Exam {
 
   @@index([patientId])
   @@index([idempotencyKey])
+  @@index([examDate]) 
 }
