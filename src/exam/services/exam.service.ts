@@ -10,25 +10,6 @@ import { PatientService } from 'src/patient/services/patient.service';
 export class ExamService {
   constructor(private readonly prismaService: PrismaService, private readonly patientService: PatientService) {}
   
-  async create(createExamDto: CreateExamDto) {
-    const existingExam = await this.findByIdempotencyKey(createExamDto.idempotencyKey);
-    if (existingExam)
-      return existingExam;
-
-    const patient = await this.patientService.findByDocument(createExamDto.patientDocument)
-    if (!patient)
-      throw new NotFoundException('Patient not found');
-
-    const data = {
-      patientId : patient.id,
-      dicomModality: createExamDto.dicomModality,
-      examDate: createExamDto.examDate,
-      idempotencyKey: createExamDto.idempotencyKey
-    }
-
-    return this.prismaService.exam.create({ data });
-  }
-
   async findAll(query: QueryExamsDto) {
     const { page = 1, pageSize = 10, search, patientDocument, dicomModality, examDate } = query;
     const skip = (page - 1) * pageSize;
@@ -75,7 +56,23 @@ export class ExamService {
     };
   }
 
-  private async findByIdempotencyKey(idempotencyKey: string): Promise<Exam | null> {
-    return this.prismaService.exam.findUnique({ where: { idempotencyKey } });
+  async findByIdempotencyKey(key: string) {
+    return this.prismaService.exam.findUnique({ where: { idempotencyKey: key } });
   }
+
+  async create(createExamDto: CreateExamDto) {
+    const patient = await this.patientService.findByDocument(createExamDto.patientDocument);
+    if (!patient)
+      throw new NotFoundException('Patient not found');
+
+    return this.prismaService.exam.create({
+      data: {
+        patientId: patient.id,
+        dicomModality: createExamDto.dicomModality,
+        examDate: createExamDto.examDate,
+        idempotencyKey: createExamDto.idempotencyKey,
+      },
+    });
+  }   
+  
 }
