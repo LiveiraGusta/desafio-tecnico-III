@@ -24,6 +24,14 @@ export class QueryExamsDto {
     patientDocument?: string;
 
     @IsOptional()
+    @IsString()
+    name?: string;
+
+    @IsOptional()
+    @IsString()
+    responsibleDoctor?: string;
+
+    @IsOptional()
     @IsEnum(DicomModality)
     dicomModality?: DicomModality;
 

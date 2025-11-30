@@ -47,8 +47,3 @@ export type Patient = Prisma.PatientModel
  * 
  */
 export type Exam = Prisma.ExamModel
-/**
- * Model User
- * 
- */
-export type User = Prisma.UserModel

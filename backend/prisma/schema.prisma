@@ -44,6 +44,8 @@ model Patient {
 
 model Exam {
   id              String         @id @default(uuid())
+  name            String
+  responsibleDoctor String
   patientId       String
   patient         Patient        @relation("PatientExams",fields: [patientId], references: [id])
   dicomModality   DicomModality

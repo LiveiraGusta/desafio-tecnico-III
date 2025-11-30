@@ -6,6 +6,14 @@ export class CreateExamDto{
     @IsNotEmpty({ message: 'Patient CPF is required' })
     patientDocument: string;
 
+    @IsString()
+    @IsNotEmpty({ message: 'Name is required' })
+    name: string;
+
+    @IsString()
+    @IsNotEmpty({ message: 'Responsible Doctor is required' })
+    responsibleDoctor: string;
+
     @IsEnum(DicomModality, { message: 'Dicom modality must be a valid enum value' })
     dicomModality: DicomModality;
 

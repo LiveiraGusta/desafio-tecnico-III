@@ -52,8 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Patient: 'Patient',
-  Exam: 'Exam',
-  User: 'User'
+  Exam: 'Exam'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -87,6 +86,8 @@ export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeo
 
 export const ExamScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  responsibleDoctor: 'responsibleDoctor',
   patientId: 'patientId',
   dicomModality: 'dicomModality',
   examDate: 'examDate',
@@ -95,16 +96,6 @@ export const ExamScalarFieldEnum = {
 } as const
 
 export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
-
-
-export const UserScalarFieldEnum = {
-  id: 'id',
-  nome: 'nome',
-  email: 'email',
-  idade: 'idade'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const SortOrder = {

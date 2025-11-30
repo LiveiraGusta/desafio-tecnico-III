@@ -26,6 +26,8 @@ export type AggregateExam = {
 
 export type ExamMinAggregateOutputType = {
   id: string | null
+  name: string | null
+  responsibleDoctor: string | null
   patientId: string | null
   dicomModality: $Enums.DicomModality | null
   examDate: Date | null
@@ -35,6 +37,8 @@ export type ExamMinAggregateOutputType = {
 
 export type ExamMaxAggregateOutputType = {
   id: string | null
+  name: string | null
+  responsibleDoctor: string | null
   patientId: string | null
   dicomModality: $Enums.DicomModality | null
   examDate: Date | null
@@ -44,6 +48,8 @@ export type ExamMaxAggregateOutputType = {
 
 export type ExamCountAggregateOutputType = {
   id: number
+  name: number
+  responsibleDoctor: number
   patientId: number
   dicomModality: number
   examDate: number
@@ -55,6 +61,8 @@ export type ExamCountAggregateOutputType = {
 
 export type ExamMinAggregateInputType = {
   id?: true
+  name?: true
+  responsibleDoctor?: true
   patientId?: true
   dicomModality?: true
   examDate?: true
@@ -64,6 +72,8 @@ export type ExamMinAggregateInputType = {
 
 export type ExamMaxAggregateInputType = {
   id?: true
+  name?: true
+  responsibleDoctor?: true
   patientId?: true
   dicomModality?: true
   examDate?: true
@@ -73,6 +83,8 @@ export type ExamMaxAggregateInputType = {
 
 export type ExamCountAggregateInputType = {
   id?: true
+  name?: true
+  responsibleDoctor?: true
   patientId?: true
   dicomModality?: true
   examDate?: true
@@ -155,6 +167,8 @@ export type ExamGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type ExamGroupByOutputType = {
   id: string
+  name: string
+  responsibleDoctor: string
   patientId: string
   dicomModality: $Enums.DicomModality
   examDate: Date
@@ -185,6 +199,8 @@ export type ExamWhereInput = {
   OR?: Prisma.ExamWhereInput[]
   NOT?: Prisma.ExamWhereInput | Prisma.ExamWhereInput[]
   id?: Prisma.StringFilter<"Exam"> | string
+  name?: Prisma.StringFilter<"Exam"> | string
+  responsibleDoctor?: Prisma.StringFilter<"Exam"> | string
   patientId?: Prisma.StringFilter<"Exam"> | string
   dicomModality?: Prisma.EnumDicomModalityFilter<"Exam"> | $Enums.DicomModality
   examDate?: Prisma.DateTimeFilter<"Exam"> | Date | string
@@ -195,6 +211,8 @@ export type ExamWhereInput = {
 
 export type ExamOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  responsibleDoctor?: Prisma.SortOrder
   patientId?: Prisma.SortOrder
   dicomModality?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
@@ -209,6 +227,8 @@ export type ExamWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ExamWhereInput | Prisma.ExamWhereInput[]
   OR?: Prisma.ExamWhereInput[]
   NOT?: Prisma.ExamWhereInput | Prisma.ExamWhereInput[]
+  name?: Prisma.StringFilter<"Exam"> | string
+  responsibleDoctor?: Prisma.StringFilter<"Exam"> | string
   patientId?: Prisma.StringFilter<"Exam"> | string
   dicomModality?: Prisma.EnumDicomModalityFilter<"Exam"> | $Enums.DicomModality
   examDate?: Prisma.DateTimeFilter<"Exam"> | Date | string
@@ -218,6 +238,8 @@ export type ExamWhereUniqueInput = Prisma.AtLeast<{
 
 export type ExamOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  responsibleDoctor?: Prisma.SortOrder
   patientId?: Prisma.SortOrder
   dicomModality?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
@@ -233,6 +255,8 @@ export type ExamScalarWhereWithAggregatesInput = {
   OR?: Prisma.ExamScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ExamScalarWhereWithAggregatesInput | Prisma.ExamScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Exam"> | string
+  name?: Prisma.StringWithAggregatesFilter<"Exam"> | string
+  responsibleDoctor?: Prisma.StringWithAggregatesFilter<"Exam"> | string
   patientId?: Prisma.StringWithAggregatesFilter<"Exam"> | string
   dicomModality?: Prisma.EnumDicomModalityWithAggregatesFilter<"Exam"> | $Enums.DicomModality
   examDate?: Prisma.DateTimeWithAggregatesFilter<"Exam"> | Date | string
@@ -242,6 +266,8 @@ export type ExamScalarWhereWithAggregatesInput = {
 
 export type ExamCreateInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
   idempotencyKey: string
@@ -251,6 +277,8 @@ export type ExamCreateInput = {
 
 export type ExamUncheckedCreateInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   patientId: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
@@ -260,6 +288,8 @@ export type ExamUncheckedCreateInput = {
 
 export type ExamUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -269,6 +299,8 @@ export type ExamUpdateInput = {
 
 export type ExamUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -278,6 +310,8 @@ export type ExamUncheckedUpdateInput = {
 
 export type ExamCreateManyInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   patientId: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
@@ -287,6 +321,8 @@ export type ExamCreateManyInput = {
 
 export type ExamUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -295,6 +331,8 @@ export type ExamUpdateManyMutationInput = {
 
 export type ExamUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -314,6 +352,8 @@ export type ExamOrderByRelationAggregateInput = {
 
 export type ExamCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  responsibleDoctor?: Prisma.SortOrder
   patientId?: Prisma.SortOrder
   dicomModality?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
@@ -323,6 +363,8 @@ export type ExamCountOrderByAggregateInput = {
 
 export type ExamMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  responsibleDoctor?: Prisma.SortOrder
   patientId?: Prisma.SortOrder
   dicomModality?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
@@ -332,6 +374,8 @@ export type ExamMaxOrderByAggregateInput = {
 
 export type ExamMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  responsibleDoctor?: Prisma.SortOrder
   patientId?: Prisma.SortOrder
   dicomModality?: Prisma.SortOrder
   examDate?: Prisma.SortOrder
@@ -387,6 +431,8 @@ export type EnumDicomModalityFieldUpdateOperationsInput = {
 
 export type ExamCreateWithoutPatientInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
   idempotencyKey: string
@@ -395,6 +441,8 @@ export type ExamCreateWithoutPatientInput = {
 
 export type ExamUncheckedCreateWithoutPatientInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
   idempotencyKey: string
@@ -432,6 +480,8 @@ export type ExamScalarWhereInput = {
   OR?: Prisma.ExamScalarWhereInput[]
   NOT?: Prisma.ExamScalarWhereInput | Prisma.ExamScalarWhereInput[]
   id?: Prisma.StringFilter<"Exam"> | string
+  name?: Prisma.StringFilter<"Exam"> | string
+  responsibleDoctor?: Prisma.StringFilter<"Exam"> | string
   patientId?: Prisma.StringFilter<"Exam"> | string
   dicomModality?: Prisma.EnumDicomModalityFilter<"Exam"> | $Enums.DicomModality
   examDate?: Prisma.DateTimeFilter<"Exam"> | Date | string
@@ -441,6 +491,8 @@ export type ExamScalarWhereInput = {
 
 export type ExamCreateManyPatientInput = {
   id?: string
+  name: string
+  responsibleDoctor: string
   dicomModality: $Enums.DicomModality
   examDate: Date | string
   idempotencyKey: string
@@ -449,6 +501,8 @@ export type ExamCreateManyPatientInput = {
 
 export type ExamUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -457,6 +511,8 @@ export type ExamUpdateWithoutPatientInput = {
 
 export type ExamUncheckedUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -465,6 +521,8 @@ export type ExamUncheckedUpdateWithoutPatientInput = {
 
 export type ExamUncheckedUpdateManyWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  responsibleDoctor?: Prisma.StringFieldUpdateOperationsInput | string
   dicomModality?: Prisma.EnumDicomModalityFieldUpdateOperationsInput | $Enums.DicomModality
   examDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -475,6 +533,8 @@ export type ExamUncheckedUpdateManyWithoutPatientInput = {
 
 export type ExamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  responsibleDoctor?: boolean
   patientId?: boolean
   dicomModality?: boolean
   examDate?: boolean
@@ -485,6 +545,8 @@ export type ExamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type ExamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  responsibleDoctor?: boolean
   patientId?: boolean
   dicomModality?: boolean
   examDate?: boolean
@@ -495,6 +557,8 @@ export type ExamSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type ExamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  name?: boolean
+  responsibleDoctor?: boolean
   patientId?: boolean
   dicomModality?: boolean
   examDate?: boolean
@@ -505,6 +569,8 @@ export type ExamSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type ExamSelectScalar = {
   id?: boolean
+  name?: boolean
+  responsibleDoctor?: boolean
   patientId?: boolean
   dicomModality?: boolean
   examDate?: boolean
@@ -512,7 +578,7 @@ export type ExamSelectScalar = {
   createdAt?: boolean
 }
 
-export type ExamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "dicomModality" | "examDate" | "idempotencyKey" | "createdAt", ExtArgs["result"]["exam"]>
+export type ExamOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "responsibleDoctor" | "patientId" | "dicomModality" | "examDate" | "idempotencyKey" | "createdAt", ExtArgs["result"]["exam"]>
 export type ExamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
 }
@@ -530,6 +596,8 @@ export type $ExamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    name: string
+    responsibleDoctor: string
     patientId: string
     dicomModality: $Enums.DicomModality
     examDate: Date
@@ -960,6 +1028,8 @@ export interface Prisma__ExamClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface ExamFieldRefs {
   readonly id: Prisma.FieldRef<"Exam", 'String'>
+  readonly name: Prisma.FieldRef<"Exam", 'String'>
+  readonly responsibleDoctor: Prisma.FieldRef<"Exam", 'String'>
   readonly patientId: Prisma.FieldRef<"Exam", 'String'>
   readonly dicomModality: Prisma.FieldRef<"Exam", 'DicomModality'>
   readonly examDate: Prisma.FieldRef<"Exam", 'DateTime'>
