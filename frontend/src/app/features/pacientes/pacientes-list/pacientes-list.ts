@@ -10,7 +10,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +17,8 @@ import { CleanObject } from '../../../shared/utils/cleanObject.util';
 import { PacientesService } from '../services/pacientes.service';
 import { Paciente } from '../types/paciente.model';
 import { QueryPatientsDto } from '../types/query-patients.dto';
+import { PacientesForm } from '../pacientes-form/pacientes-form';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-pacientes-list',
@@ -29,11 +30,8 @@ import { QueryPatientsDto } from '../types/query-patients.dto';
     MatTableModule,
     MatButtonModule,
     ReactiveFormsModule,
-    RouterLink,
     MatSelectModule,
-    DatePipe,
     MatIconModule,
-    MatDatepickerModule,
     MatNativeDateModule, 
     MatFormFieldModule,
     MatInputModule,
@@ -43,11 +41,14 @@ import { QueryPatientsDto } from '../types/query-patients.dto';
     MatExpansionModule,
    ],
 })
-export class PacientesList {
+
+export class PacientesList  implements OnInit, OnDestroy{
+  constructor(private dialog: MatDialog) {}
+
   private service = inject(PacientesService);
   private cleanObject = CleanObject;
-
-  displayedColumns = ['name', 'document', 'email', 'phone','createdAt', 'actions'];
+ 
+  displayedColumns = ['name', 'document', 'email', 'phone', 'createdAt'];
   dataSource = new MatTableDataSource<Paciente>([]);
 
   totalItems = 0;
@@ -83,6 +84,7 @@ export class PacientesList {
   get phoneControl() {
     return this.formFilters.get('phone') as FormControl;
   }
+  
   get documentControl() {
     return this.formFilters.get('document') as FormControl;
   }
@@ -136,5 +138,16 @@ export class PacientesList {
     this.pageSize = event.pageSize;
     this.loadPatients();
   }
+
+  openForm() {
+    const dialogRef = this.dialog.open(PacientesForm, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadPatients();
+    });
+  }
+
 }
 

@@ -1,9 +1,11 @@
 export interface QueryExamsDto {
     page?: number;
     pageSize?: number;
-    patientDocument?: string;
+    name?: string,
+    patientDocument?: string,
+    responsibleDoctor?: string,
     dicomModality?: string;
     examDate?: string;
     
-    search?: string;
+    search?: string;   
 }

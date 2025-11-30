@@ -11,7 +11,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { Exame } from '../types/exames.model';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -19,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { QueryExamsDto } from '../types/query-exams.dto';
 import { CleanObject } from '../../../shared/utils/cleanObject.util';
 import { DicomModality } from '../types/dicom-modality';
+import { ExamesForm } from '../exames-form/exames-form';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-exames-list',
@@ -30,7 +31,6 @@ import { DicomModality } from '../types/dicom-modality';
     MatTableModule,
     MatButtonModule,
     ReactiveFormsModule,
-    RouterLink,
     MatSelectModule,
     DatePipe,
     MatIconModule,
@@ -46,10 +46,12 @@ import { DicomModality } from '../types/dicom-modality';
 })
 
 export class ExamesList implements OnInit, OnDestroy {
+  constructor(private dialog: MatDialog) {}
+
   private service = inject(ExamesService);
   private cleanObject = CleanObject;
 
-  displayedColumns = ['patientName', 'patientDocument', 'dicomModality', 'examDate', 'actions'];
+  displayedColumns = ['name',  'responsibleDoctor', 'patientName', 'patientDocument', 'dicomModality', 'examDate'];
   dataSource = new MatTableDataSource<Exame>([]);
   totalItems = 0;
   pageSize = 10;
@@ -71,8 +73,18 @@ export class ExamesList implements OnInit, OnDestroy {
 
   formFilters = new FormGroup({
     patientDocument: new FormControl(''),
+    name: new FormControl(''),
+    responsibleDoctor: new FormControl(''),
     dicomModality: new FormControl<DicomModality | null>(null),
   });
+
+  get nameControl() {
+    return this.formFilters.get('name') as FormControl;
+  }
+
+  get responsibleDoctorControl() {
+    return this.formFilters.get('responsibleDoctor') as FormControl;
+  }
 
   get patientDocumentControl() {
     return this.formFilters.get('patientDocument') as FormControl;
@@ -87,6 +99,8 @@ export class ExamesList implements OnInit, OnDestroy {
       page: this.pageIndex + 1,
       pageSize: this.pageSize,
       patientDocument: this.patientDocumentControl.value || null,
+      name: this.nameControl.value || null,
+      responsibleDoctor: this.responsibleDoctorControl.value || null,
       dicomModality: this.dicomModalityControl.value || null,
     };
 
@@ -97,6 +111,8 @@ export class ExamesList implements OnInit, OnDestroy {
       next: (res) => {
         this.dataSource.data = res.data.map(exame => ({
           id: exame.id,
+          name: exame.name ?? '',
+          responsibleDoctor: exame.responsibleDoctor ?? '', 
           patientName: exame.patient?.name ?? '',
           patientDocument: exame.patient?.document ?? '',
           dicomModality: exame.dicomModality ?? '',
@@ -127,5 +143,15 @@ export class ExamesList implements OnInit, OnDestroy {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadExams();
+  }
+
+  openForm() {
+    const dialogRef = this.dialog.open(ExamesForm, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadExams();
+    });
   }
 }
