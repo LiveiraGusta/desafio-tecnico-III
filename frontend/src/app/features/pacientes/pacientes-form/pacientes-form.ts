@@ -41,6 +41,8 @@ export class PacientesForm implements OnDestroy {
     private snackBar: MatSnackBar
   ) {}
 
+  buttonValue: string = 'Salvar';
+
   ngOnDestroy(): void {
     this.form.reset();
   }
@@ -62,6 +64,7 @@ export class PacientesForm implements OnDestroy {
         error: (err) => {
           console.error(err);
           this.snackBar.open('Erro ao criar paciente', 'Fechar', { duration: 3000 });
+          this.buttonValue = 'Tentar novamente'
         }
       });
     }
