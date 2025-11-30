@@ -70,7 +70,7 @@ export class ExamService {
     return this.prismaService.exam.findUnique({ where: { idempotencyKey: key } });
   }
 
-  async create(createExamDto: CreateExamDto) {
+  async create(createExamDto: CreateExamDto, idempotencyKey: string) {
     const patient = await this.patientService.findByDocument(createExamDto.patientDocument);
     if (!patient)
       throw new NotFoundException('Patient not found');
@@ -78,9 +78,11 @@ export class ExamService {
     return this.prismaService.exam.create({
       data: {
         patientId: patient.id,
+        name: createExamDto.name,
+        responsibleDoctor: createExamDto.responsibleDoctor,
         dicomModality: createExamDto.dicomModality,
         examDate: createExamDto.examDate,
-        idempotencyKey: createExamDto.idempotencyKey,
+        idempotencyKey: idempotencyKey,
       },
     });
   }   

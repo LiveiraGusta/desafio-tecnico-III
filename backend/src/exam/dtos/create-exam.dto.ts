@@ -19,8 +19,4 @@ export class CreateExamDto{
 
     @IsDateString({}, { message: 'Exam date must be a valid ISO date string' })
     examDate: string;
-
-    @IsString()
-    @IsNotEmpty({ message: 'Idempotency key is required' })
-    idempotencyKey: string;
 }

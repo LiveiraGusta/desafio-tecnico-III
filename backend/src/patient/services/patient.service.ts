@@ -19,9 +19,16 @@ export class PatientService {
   async findAll(query: QueryPatientsDto) {
     const { page = 1, pageSize = 10, search, name, document } = query;
     const skip = (page - 1) * pageSize;
-    
-    const where: any = {};
 
+    // filtros
+    const filters = {
+      ...(name && { name: { contains: name, mode: 'insensitive' } }),
+      ...(document && { document: { equals: document } }),
+    };
+
+    const where: any = { ...filters };
+
+    // pesquisa
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -29,12 +36,6 @@ export class PatientService {
         { document: { contains: search, mode: 'insensitive' } },
       ];
     }
-
-    if (name)
-      where.name = { contains: name, mode: 'insensitive' };
-    
-    if (document)
-      where.document = { equals: document };
 
     const [patients, total] = await this.prismaService.$transaction([
       this.prismaService.patient.findMany({
@@ -51,7 +52,7 @@ export class PatientService {
       page,
       pageSize,
       totalPages: Math.ceil(total / pageSize),
-      total: total,
+      total,
     };
   }
 

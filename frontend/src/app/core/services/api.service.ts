@@ -11,7 +11,7 @@ export class ApiService {
 
   //Idempotency
   private withIdempotency(headers?: HttpHeaders) {
-    return (headers ?? new HttpHeaders()).set('Idempotency-Key', crypto.randomUUID());
+    return (headers ?? new HttpHeaders()).set('idempotency-key', crypto.randomUUID());
   }
 
   get<T>(endpoint: string, params?: Record<string, any>): Observable<T> {
