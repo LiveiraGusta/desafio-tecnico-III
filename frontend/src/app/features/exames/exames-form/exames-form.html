@@ -1,1 +1,74 @@
-<p>exames-form works!</p>
+<h2 mat-dialog-title>Adicionar Exame</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="space-y-4">
+  <mat-form-field class="w-full">
+    <mat-label>CPF do paciente</mat-label>
+    <mat-icon matPrefix>badge</mat-icon>
+    <input
+      matInput
+      formControlName="patientDocument"
+      (blur)="checkPatient()"
+    />
+    
+    <mat-hint *ngIf="patientNotFound" class="text-red-400">
+      Paciente não encontrado
+    </mat-hint>
+
+    <mat-hint *ngIf="patientName">
+      Paciente: {{ patientName }}
+    </mat-hint>
+
+    <mat-error *ngIf="form.get('patientDocument')?.hasError('required')">
+      CPF é obrigatório
+    </mat-error>
+  </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label> Nome do exame </mat-label>
+      <mat-icon matPrefix>person</mat-icon>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="form.get('name')?.hasError('required')"> Nome é obrigatório </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label> Médico responsável </mat-label>
+      <mat-icon matPrefix>medical_services</mat-icon>
+      <input matInput formControlName="responsibleDoctor" />
+      <mat-error *ngIf="form.get('responsibleDoctor')?.hasError('required')">
+        Médico responsável é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label> Modalidade DICOM </mat-label>
+      <mat-icon matPrefix>image</mat-icon>
+      <mat-select formControlName="dicomModality">
+        <mat-option *ngFor="let modality of modalities" [value]="modality">
+          {{ modality }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('dicomModality')?.hasError('required')">
+        Modalidade é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Data do exame</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="examDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.get('examDate')?.hasError('required')">
+            Data do exame é obrigatória
+        </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
+    Salvar
+  </button>
+</mat-dialog-actions>

@@ -10,5 +10,4 @@
  */
 export type * from './models/Patient'
 export type * from './models/Exam'
-export type * from './models/User'
 export type * from './commonInputTypes'

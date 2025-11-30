@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpStatus, Res, Headers } from '@nestjs/common';
 import { Response } from 'express'; 
 import { ExamService } from '../services/exam.service';
 import { CreateExamDto } from '../dtos/create-exam.dto';
@@ -10,13 +10,16 @@ export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
   @Post()
-  async create(@Body() createExamDto: CreateExamDto, @Res() res: Response) {
-    const existingExam = await this.examService.findByIdempotencyKey(createExamDto.idempotencyKey);
+  async create(@Body() createExamDto: CreateExamDto, @Headers('idempotency-key') idempotencyKey: string, @Res() res: Response) {
+    if(!idempotencyKey)
+      return res.status(400).json('Idempotency key is required'); 
+
+    const existingExam = await this.examService.findByIdempotencyKey(idempotencyKey);
 
     if (existingExam)
       return res.status(200).json(existingExam); 
 
-    const newExam = await this.examService.create(createExamDto);
+    const newExam = await this.examService.create(createExamDto, idempotencyKey);
     return res.status(201).json(newExam);
   }
 

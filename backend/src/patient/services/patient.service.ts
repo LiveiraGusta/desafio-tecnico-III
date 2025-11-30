@@ -1,8 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreatePatientDto } from '../dtos/create-patient.dto';
 import { QueryPatientsDto } from '../dtos/query-patient.dto';
 import { PrismaService } from '../../shared/prisma/prisma.service';
 import { Patient } from '../../generated/prisma/client';
+import { Console } from 'node:console';
 
 @Injectable()
 export class PatientService {
@@ -19,9 +20,16 @@ export class PatientService {
   async findAll(query: QueryPatientsDto) {
     const { page = 1, pageSize = 10, search, name, document } = query;
     const skip = (page - 1) * pageSize;
-    
-    const where: any = {};
 
+    // filtros
+    const filters = {
+      ...(name && { name: { contains: name, mode: 'insensitive' } }),
+      ...(document && { document: { equals: document } }),
+    };
+
+    const where: any = { ...filters };
+
+    // pesquisa
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -29,12 +37,6 @@ export class PatientService {
         { document: { contains: search, mode: 'insensitive' } },
       ];
     }
-
-    if (name)
-      where.name = { contains: name, mode: 'insensitive' };
-    
-    if (document)
-      where.document = { equals: document };
 
     const [patients, total] = await this.prismaService.$transaction([
       this.prismaService.patient.findMany({
@@ -51,12 +53,12 @@ export class PatientService {
       page,
       pageSize,
       totalPages: Math.ceil(total / pageSize),
-      total: total,
+      total,
     };
   }
 
-  public async findByDocument(document: string): Promise<Patient | null> {
-    return this.prismaService.patient.findUnique({ where: { document } });
+  async findByDocument(document: string): Promise<Patient | null> {
+    return await this.prismaService.patient.findUnique({ where: { document } });
   }
 
 }

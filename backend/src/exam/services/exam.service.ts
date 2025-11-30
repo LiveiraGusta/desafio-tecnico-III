@@ -10,25 +10,40 @@ export class ExamService {
   constructor(private readonly prismaService: PrismaService, private readonly patientService: PatientService) {}
   
   async findAll(query: QueryExamsDto) {
-    const { page = 1, pageSize = 10, search, patientDocument, dicomModality, examDate } = query;
+    const { 
+      page = 1, 
+      pageSize = 10, 
+      search, 
+      name, 
+      responsibleDoctor,  
+      patientDocument, 
+      dicomModality, 
+      examDate 
+    } = query;
+
     const skip = (page - 1) * pageSize;
 
-    const where: any = {};
+    // filtros
+    const filters = { name, responsibleDoctor, dicomModality };
 
+    const where: any = {
+      ...(examDate && { examDate: new Date(examDate) }),
+      ...Object.fromEntries(
+        Object.entries(filters).filter(([_, value]) => !!value)
+      ),
+    };
+
+    // pesquisa
     if (search) {
       where.OR = [
         { id: { contains: search } },
         { idempotencyKey: { contains: search } },
+        { name: { contains: search } },
+        { responsibleDoctor: { contains: search } },
         { patient: { name: { contains: search, mode: 'insensitive' } } },
         { patient: { document: { contains: search, mode: 'insensitive' } } },
       ];
     }
-
-    if (dicomModality)
-      where.dicomModality = dicomModality;
-
-    if (examDate)
-      where.examDate = new Date(examDate);
 
     const [exams, total] = await this.prismaService.$transaction([
       this.prismaService.exam.findMany({
@@ -50,11 +65,12 @@ export class ExamService {
     };
   }
 
+
   async findByIdempotencyKey(key: string) {
     return this.prismaService.exam.findUnique({ where: { idempotencyKey: key } });
   }
 
-  async create(createExamDto: CreateExamDto) {
+  async create(createExamDto: CreateExamDto, idempotencyKey: string) {
     const patient = await this.patientService.findByDocument(createExamDto.patientDocument);
     if (!patient)
       throw new NotFoundException('Patient not found');
@@ -62,9 +78,11 @@ export class ExamService {
     return this.prismaService.exam.create({
       data: {
         patientId: patient.id,
+        name: createExamDto.name,
+        responsibleDoctor: createExamDto.responsibleDoctor,
         dicomModality: createExamDto.dicomModality,
         examDate: createExamDto.examDate,
-        idempotencyKey: createExamDto.idempotencyKey,
+        idempotencyKey: idempotencyKey,
       },
     });
   }   

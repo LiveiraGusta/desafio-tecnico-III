@@ -16,8 +16,8 @@ export class PacientesService {
     return this.api.get<PaginatedResponse<Paciente>>(this.endpoint, filters);
   }
 
-  getById(id: string): Observable<Paciente> {
-    return this.api.get<Paciente>(`${this.endpoint}/${id}`);
+  getByDocument(document: string): Observable<Paciente> {
+    return this.api.get<Paciente>(`${this.endpoint}/${document}`);
   }
 
   create(data: Paciente): Observable<Paciente> {

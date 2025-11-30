@@ -3,6 +3,8 @@ import { Paciente } from "../../pacientes/types/paciente.model"
 export interface Exame {
     id?: string,
     patientDocument?: string,
+    name?: string,
+    responsibleDoctor?: string,
     patientId?: string,
     patient?: Paciente,
     idempotencyKey?: string
