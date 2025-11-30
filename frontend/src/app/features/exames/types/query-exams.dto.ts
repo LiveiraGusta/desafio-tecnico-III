@@ -4,5 +4,6 @@ export interface QueryExamsDto {
     patientDocument?: string;
     dicomModality?: string;
     examDate?: string;
+    
     search?: string;
 }

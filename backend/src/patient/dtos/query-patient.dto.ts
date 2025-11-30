@@ -1,4 +1,4 @@
-import { IsOptional, IsInt, Min, IsString } from 'class-validator';
+import { IsOptional, IsInt, Min, IsString, IsEmail } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class QueryPatientsDto {
@@ -21,6 +21,14 @@ export class QueryPatientsDto {
     @IsOptional()
     @IsString()
     name?: string;
+
+    @IsOptional()
+    @IsString()
+    phone?: string;
+
+    @IsOptional()
+    @IsEmail()
+    email?: string;
 
     @IsOptional()
     @IsString()

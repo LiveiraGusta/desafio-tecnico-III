@@ -3,5 +3,7 @@ export interface QueryPatientsDto {
     pageSize?: number;
     search?: string;
     name?: string;
+    email?: string;
+    phone?: string;
     document?: string;
 }

@@ -17,6 +17,10 @@ export class QueryExamsDto {
 
     @IsOptional()
     @IsString()
+    patientName?: string;
+
+    @IsOptional()
+    @IsString()
     patientDocument?: string;
 
     @IsOptional()
