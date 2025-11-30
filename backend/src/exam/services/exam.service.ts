@@ -24,11 +24,6 @@ export class ExamService {
       ];
     }
 
-    if (patientDocument){
-      const patient = await this.patientService.findByDocument(patientDocument);
-      where.patientId = patient?.id;
-    }
-
     if (dicomModality)
       where.dicomModality = dicomModality;
 

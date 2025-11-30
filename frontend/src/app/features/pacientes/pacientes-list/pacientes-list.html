@@ -1,1 +1,119 @@
-<p>pacientes-list works!</p>
+<div class="w-full flex flex-col border rounded-2xl shadow-lg shadow-gray-400 bg-white">
+  <div class="bg-blue-700 text-white px-10 py-7 shadow-lg rounded-t-2xl">
+    <h1 class="text-3xl font-semibold">Pacientes</h1>
+    <span class="text-sm opacity-80 flex items-center gap-1">
+      <mat-icon fontIcon="home" class="text-white opacity-80 text-xs"></mat-icon>
+      / Pacientes
+    </span>
+  </div>
+
+  <div class="w-full flex items-center justify-between px-6 py-4 border-b">
+    <div class="flex items-center gap-3">
+      <button
+        mat-icon-button
+        class="!bg-blue-700 !text-white w-12 h-12 flex items-center justify-center rounded-full hover:!shadow-md hover:!bg-blue-600"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        class="!bg-blue-700 !text-white w-12 h-12 flex items-center justify-center rounded-full hover:!shadow-md hover:!bg-blue-600"
+        (click)="showFilters = !showFilters"
+      >
+        <mat-icon>filter_alt</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-accordion *ngIf="showFilters" class="border-b px-6 py-4 bg-gray-50">
+    <div class="grid gap-4">
+        <form [formGroup]="formFilters" class="space-y-4">
+            <!-- Nome -->
+            <mat-form-field class="w-full">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Digite o nome" formControlName="name" />
+                <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Digite o email" formControlName="email" />
+                <mat-icon matPrefix>email</mat-icon>
+            </mat-form-field>
+
+            <!-- Telefone -->
+            <mat-form-field class="w-full">
+                <mat-label>Telefone</mat-label>
+                <input matInput placeholder="Digite o telefone" formControlName="phone" />
+                <mat-icon matPrefix>phone</mat-icon>
+            </mat-form-field>
+
+            <!-- Documento -->
+            <mat-form-field class="w-full">
+                <mat-label>Documento</mat-label>
+                <input matInput placeholder="Digite o documento" formControlName="document" />
+                <mat-icon matPrefix>badge</mat-icon>
+            </mat-form-field>
+            </form>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-4">
+      <button mat-stroked-button color="warn" (click)="clearFilters()">Limpar</button>
+      <button mat-flat-button color="primary" (click)="applyFilters()">Aplicar</button>
+    </div>
+  </mat-accordion>
+
+  <div class="p-6 overflow-auto">
+    <table mat-table [dataSource]="dataSource" class="min-w-full border rounded-xl">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Paciente</th>
+        <td mat-cell *matCellDef="let r">{{ r.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="document">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let r">{{ r.document }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>E-Email</th>
+        <td mat-cell *matCellDef="let r">{{ r.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Telefone</th>
+        <td mat-cell *matCellDef="let r">{{ r.phone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let r">{{ r.createdAt | date : 'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-right">Ações</th>
+        <td mat-cell *matCellDef="let r" class="text-right">
+          <button mat-stroked-button color="primary">Editar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-100 text-sm"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="hover:bg-gray-50 text-sm"
+      ></tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="onPageChange($event)"
+    class="border-t rounded-b-2xl shadow-inner"
+  >
+  </mat-paginator>
+</div>
