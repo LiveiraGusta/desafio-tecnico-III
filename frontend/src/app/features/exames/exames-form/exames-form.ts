@@ -12,6 +12,7 @@ import { ExamesService } from '../services/exames.service';
 import { Exame } from '../types/exames.model';
 import { DicomModality } from '../types/dicom-modality';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { PacientesService } from '../../pacientes/services/pacientes.service';
 
 @Component({
   selector: 'app-exames-form',
@@ -41,15 +42,38 @@ export class ExamesForm implements OnDestroy {
     examDate: new FormControl('', Validators.required),
   });
 
+  patientName?: string;
+  patientNotFound = false;
+
   constructor(
     private dialogRef: MatDialogRef<ExamesForm>,
     private service: ExamesService,
+    private pacientesService: PacientesService,
     private snackBar: MatSnackBar
   ) {}
 
   modalities = Object.values(DicomModality);
   selectedModality?: DicomModality;
   
+  checkPatient() {
+    const cpf = this.form.value.patientDocument;
+    if (!cpf) return;
+
+    this.pacientesService.getByDocument(cpf).subscribe({
+      next: (patient) => {
+        this.patientName = patient.name;
+        this.patientNotFound = false;
+        this.form.enable();
+      },
+      error: () => {
+        this.patientName = undefined;
+        this.patientNotFound = true;
+        this.form.disable(); 
+        this.form.get('patientDocument')?.enable(); 
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.form.reset();
   }

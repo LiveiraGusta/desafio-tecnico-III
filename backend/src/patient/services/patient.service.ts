@@ -1,8 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreatePatientDto } from '../dtos/create-patient.dto';
 import { QueryPatientsDto } from '../dtos/query-patient.dto';
 import { PrismaService } from '../../shared/prisma/prisma.service';
 import { Patient } from '../../generated/prisma/client';
+import { Console } from 'node:console';
 
 @Injectable()
 export class PatientService {
@@ -56,8 +57,8 @@ export class PatientService {
     };
   }
 
-  public async findByDocument(document: string): Promise<Patient | null> {
-    return this.prismaService.patient.findUnique({ where: { document } });
+  async findByDocument(document: string): Promise<Patient | null> {
+    return await this.prismaService.patient.findUnique({ where: { document } });
   }
 
 }
