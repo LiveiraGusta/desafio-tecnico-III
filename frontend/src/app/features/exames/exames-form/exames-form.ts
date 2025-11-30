@@ -52,6 +52,7 @@ export class ExamesForm implements OnDestroy {
     private snackBar: MatSnackBar
   ) {}
 
+  buttonValue: string = 'Salvar';
   modalities = Object.values(DicomModality);
   selectedModality?: DicomModality;
   
@@ -90,6 +91,7 @@ export class ExamesForm implements OnDestroy {
         error: (err) => {
           console.error(err);
           this.snackBar.open('Erro ao criar exame', 'Fechar', { duration: 3000 });
+          this.buttonValue = 'Tentar Novamente'
         }
       });
     }

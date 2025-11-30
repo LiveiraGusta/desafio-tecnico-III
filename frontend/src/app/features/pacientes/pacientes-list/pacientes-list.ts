@@ -19,6 +19,7 @@ import { Paciente } from '../types/paciente.model';
 import { QueryPatientsDto } from '../types/query-patients.dto';
 import { PacientesForm } from '../pacientes-form/pacientes-form';
 import { MatDialog } from '@angular/material/dialog';
+import { LoadingService } from '../../../core/services/loading.service';
 
 @Component({
   selector: 'app-pacientes-list',
@@ -43,7 +44,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class PacientesList  implements OnInit, OnDestroy{
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+  ) {}
 
   private service = inject(PacientesService);
   private cleanObject = CleanObject;

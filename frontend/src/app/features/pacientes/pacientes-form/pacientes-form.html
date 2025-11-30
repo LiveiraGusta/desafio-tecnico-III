@@ -42,6 +42,6 @@
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancel()">Cancelar</button>
   <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid">
-    Salvar
+    {{ buttonValue }}
   </button>
 </mat-dialog-actions>

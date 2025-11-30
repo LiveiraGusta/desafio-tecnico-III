@@ -1,0 +1,23 @@
+<mat-sidenav-container class="h-screen">
+
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="sidenav-header">
+      <span class="logo">Mobilemed</span>
+    </div>
+
+    <nav class="nav-links">
+        <a routerLink="/pacientes" routerLinkActive="active-link" class="nav-link">Pacientes</a>
+        
+        <a routerLink="/exames" routerLinkActive="active-link" class="nav-link">Exames</a>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <main class="p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<app-loading></app-loading>
